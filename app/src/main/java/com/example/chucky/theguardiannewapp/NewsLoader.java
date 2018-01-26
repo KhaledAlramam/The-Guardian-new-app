@@ -2,33 +2,29 @@ package com.example.chucky.theguardiannewapp;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.util.Log;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by chucky on 1/26/18.
  */
 
-public class NewsLoader extends AsyncTaskLoader<String> {
+public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
 
+    public String myStringUrl="";
     public static int loaderID=22;
-    public NewsLoader(Context context){
+    public NewsLoader(Context context,String url){
         super(context);
+        myStringUrl=url;
     }
 
     @Override
-    public String loadInBackground() {
-        String jsonResponse="";
-        URL url;
-        try {
-             url=new URL("http://content.guardianapis.com/search?q=business&api-key=test&show-references=author");
-            jsonResponse=Networkings.requestData(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Log.e(NewsLoader.class.getSimpleName(),jsonResponse);
-        return jsonResponse;
+    public ArrayList<News> loadInBackground() {
+        ArrayList<News> finalResponse=new ArrayList<>();
+
+        finalResponse=QueryUtils.fetchData(myStringUrl);
+
+
+        return finalResponse;
     }
 }
