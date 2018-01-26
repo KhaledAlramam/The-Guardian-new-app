@@ -1,14 +1,17 @@
 package com.example.chucky.theguardiannewapp;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,14 +25,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (isNetworkConnected()){
         getLoaderManager().initLoader(loaderID,null,this).forceLoad();
+        }else{
+            Toast.makeText(getApplicationContext(),"Check internet connectivity",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
-
-
-
-
-
+    
 
     @Override
     public Loader<ArrayList<News>> onCreateLoader(int i, Bundle bundle) {
@@ -61,5 +64,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<ArrayList<News>> loader) {
 
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 }
