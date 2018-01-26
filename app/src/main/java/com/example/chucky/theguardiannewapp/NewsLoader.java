@@ -13,6 +13,7 @@ import java.net.URL;
 
 public class NewsLoader extends AsyncTaskLoader<String> {
 
+    public static int loaderID=22;
     public NewsLoader(Context context){
         super(context);
     }
