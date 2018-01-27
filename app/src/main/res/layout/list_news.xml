@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/title"
         android:id="@+id/news_title"
+        style="@style/title"
         tools:text="Momo Salah moves to Rome" />
 
     <RelativeLayout
@@ -16,15 +16,27 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp">
 
-        <TextView
-            style="@style/section"
-            android:id="@+id/section"
-            tools:text="Sport" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/writer"
+                style="@style/writer"
+                tools:text="Andres Gomes"/>
+
+            <TextView
+                android:id="@+id/section"
+                style="@style/section"
+                tools:text="Sport" />
+
+        </LinearLayout>
 
         <TextView
-            style="@style/author"
-            android:id="@+id/author"
-            tools:text="Andres Gomes" />
+            android:id="@+id/date"
+            style="@style/date"
+            tools:text="20-03-2015" />
 
     </RelativeLayout>
 

@@ -11,18 +11,19 @@ import java.util.ArrayList;
 
 public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
 
-    public String myStringUrl="";
-    public static int loaderID=22;
-    public NewsLoader(Context context,String url){
+    public static int loaderID = 22;
+    public String myStringUrl = "";
+
+    public NewsLoader(Context context, String url) {
         super(context);
-        myStringUrl=url;
+        myStringUrl = url;
     }
 
     @Override
     public ArrayList<News> loadInBackground() {
-        ArrayList<News> finalResponse=new ArrayList<>();
+        ArrayList<News> finalResponse = new ArrayList<>();
 
-        finalResponse=QueryUtils.fetchData(myStringUrl);
+        finalResponse = QueryUtils.fetchData(myStringUrl);
 
 
         return finalResponse;

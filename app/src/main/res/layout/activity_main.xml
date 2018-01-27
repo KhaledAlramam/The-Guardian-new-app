@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.chucky.theguardiannewapp.MainActivity"
-    tools:listitem="@layout/list_news"/>
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/no_con"
+        style="@style/con_text"
+        android:text="@string/no_con" />
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:context="com.example.chucky.theguardiannewapp.MainActivity"
+        tools:listitem="@layout/list_news" />
+
+    <TextView
+        android:id="@+id/empty"
+        style="@android:style/TextAppearance.Large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/strNoRecordsFound"
+        android:textColor="@color/empty"
+        android:visibility="gone"></TextView>
+</RelativeLayout>

@@ -5,13 +5,18 @@ package com.example.chucky.theguardiannewapp;
  */
 
 public class News {
-    private String title,date,section,webUrl;
+    private String title,date,section,webUrl,writer;
 
-    public News(String title,String date,String section,String webUrl){
+    public News(String title,String date,String section,String webUrl,String writer){
         this.title=title;
         this.date= date != "" ? date : "Unknown";
         this.section=section;
         this.webUrl=webUrl;
+        this.writer=writer != "" ? writer : "Unknown writer";
+    }
+
+    public String getWriter() {
+        return writer;
     }
 
     public String getWebUrl() {

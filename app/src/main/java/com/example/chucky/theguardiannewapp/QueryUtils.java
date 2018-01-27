@@ -18,57 +18,61 @@ import java.util.Scanner;
 
 public class QueryUtils {
 
-    public static URL createUrl(String stringUrl){
-        URL url=null;
+    public static URL createUrl(String stringUrl) {
+        URL url = null;
         try {
-            url=new URL(stringUrl);
+            url = new URL(stringUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return url;
     }
 
-    public static ArrayList<News> fetchData(String stringUrl){
+    public static ArrayList<News> fetchData(String stringUrl) {
 
-        URL url=null;
-        url=createUrl(stringUrl);
-        String jsonResponse="";
-        jsonResponse=requestData(url);
+        URL url = null;
+        url = createUrl(stringUrl);
+        String jsonResponse = "";
+        jsonResponse = requestData(url);
         return jsonFormat(jsonResponse);
 
     }
 
-    public static String requestData(URL url){
-        String response="";
+    public static String requestData(URL url) {
+        String response = "";
         try {
-            HttpURLConnection connection=(HttpURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(15000);
             connection.setReadTimeout(10000);
             connection.setRequestMethod("GET");
             connection.connect();
-            InputStream inputStream=connection.getInputStream();
+            InputStream inputStream = connection.getInputStream();
             Scanner s = new Scanner(inputStream).useDelimiter("\\A");
             String result = s.hasNext() ? s.next() : "";
-            response=result;
+            response = result;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return response;
     }
 
-    public static ArrayList<News> jsonFormat(String s){
-        ArrayList<News> arrayList=new ArrayList<>();
+    public static ArrayList<News> jsonFormat(String s) {
+        ArrayList<News> arrayList = new ArrayList<>();
         try {
-            JSONObject data=new JSONObject(s);
-            JSONObject response=data.getJSONObject("response");
-            JSONArray results=response.getJSONArray("results");
-            for (int i=0;i<results.length();i++){
-                JSONObject obj=results.getJSONObject(i);
-                String section=obj.getString("sectionName");
-                String date=obj.getString("webPublicationDate");
-                String title=obj.getString("webTitle");
-                String webUrl=obj.getString("webUrl");
-                arrayList.add(new News(title,date,section,webUrl));
+            JSONObject data = new JSONObject(s);
+            JSONObject response = data.getJSONObject("response");
+            JSONArray results = response.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject obj = results.getJSONObject(i);
+                String section = obj.getString("sectionName");
+                String date = obj.getString("webPublicationDate");
+                String title = obj.getString("webTitle");
+                String webUrl = obj.getString("webUrl");
+                JSONArray tags = obj.getJSONArray("tags");
+                JSONObject firsTag = tags.getJSONObject(0);
+                String writer = firsTag.getString("webTitle");
+
+                arrayList.add(new News(title, date, section, webUrl, writer));
             }
         } catch (JSONException e) {
             e.printStackTrace();
