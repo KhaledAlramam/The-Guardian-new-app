@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">The Guardian new app</string>
     <string name="no_con">No internet, please check your connection!</string>
-    <string name="strNoRecordsFound">No news were found in this section</string>
+    <string name="strNoRecordsFound">No news were found in this section, please change your search query</string>
 </resources>

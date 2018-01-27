@@ -19,25 +19,37 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<News>> {
 
-    public static final String link = "http://content.guardianapis.com/search?q=khaledalramam&api-key=test&show-tags=contributor";
+    public static final String link = "http://content.guardianapis.com/search?q=football&api-key=test&show-tags=contributor";
     public static int loaderID = 22;
     ListView listView;
     TextView noCon;
+    TextView empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         noCon = findViewById(R.id.no_con);
         if (isNetworkConnected()) {
             noCon.setVisibility(View.GONE);
             getLoaderManager().initLoader(loaderID, null, this).forceLoad();
         } else {
+
+            empty=findViewById(R.id.empty);
+            listView = findViewById(R.id.list_view);
+            listView.setAdapter(null);
+            empty.setVisibility(View.GONE);
+            noCon.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Check internet connectivity",
                     Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public Loader<ArrayList<News>> onCreateLoader(int i, Bundle bundle) {
