@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">The Guardian new app</string>
     <string name="no_con">No internet, please check your connection!</string>
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">News Settings</string>
     <string name="strNoRecordsFound">No news were found in this section, please change your search query</string>
+    <string name="settings_country">Selected country news</string>
+    <string name="settings_country_key" translatable="false">country</string>
+    <string name="settings_country_def_value">egypt</string>
+
 </resources>

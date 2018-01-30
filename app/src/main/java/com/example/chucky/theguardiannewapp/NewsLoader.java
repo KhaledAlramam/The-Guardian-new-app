@@ -2,6 +2,7 @@ package com.example.chucky.theguardiannewapp;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,13 @@ public class NewsLoader extends AsyncTaskLoader<ArrayList<News>> {
     public NewsLoader(Context context, String url) {
         super(context);
         myStringUrl = url;
+
     }
 
     @Override
     public ArrayList<News> loadInBackground() {
         ArrayList<News> finalResponse = new ArrayList<>();
-
+        Log.e(NewsLoader.class.getSimpleName(), myStringUrl);
         finalResponse = QueryUtils.fetchData(myStringUrl);
 
 

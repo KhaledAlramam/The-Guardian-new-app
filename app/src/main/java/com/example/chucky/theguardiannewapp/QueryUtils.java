@@ -1,5 +1,7 @@
 package com.example.chucky.theguardiannewapp;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +77,7 @@ public class QueryUtils {
                 arrayList.add(new News(title, date, section, webUrl, writer));
             }
         } catch (JSONException e) {
+            Log.e(QueryUtils.class.getSimpleName(), "+++++++++++++++++");
             e.printStackTrace();
         }
         return arrayList;

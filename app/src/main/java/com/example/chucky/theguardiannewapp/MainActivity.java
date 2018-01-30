@@ -4,11 +4,15 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<News>> {
 
-    public static final String link = "http://content.guardianapis.com/search?q=football&api-key=test&show-tags=contributor";
+    public static final String link = "https://content.guardianapis.com/search?section=football&api-key=test&show-tags=contributor";
     public static int loaderID = 22;
     ListView listView;
     TextView noCon;
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     @Override
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             getLoaderManager().initLoader(loaderID, null, this).forceLoad();
         } else {
 
-            empty=findViewById(R.id.empty);
+            empty = findViewById(R.id.empty);
             listView = findViewById(R.id.list_view);
             listView.setAdapter(null);
             empty.setVisibility(View.GONE);
@@ -53,7 +56,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<ArrayList<News>> onCreateLoader(int i, Bundle bundle) {
-        return new NewsLoader(MainActivity.this, link);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String searchCountry = preferences.getString(
+                getString(R.string.settings_country_key),
+                getString(R.string.settings_country_def_value));
+        Uri baseUri = Uri.parse(link);
+        Uri.Builder uri = baseUri.buildUpon().appendQueryParameter("q", searchCountry);
+        return new NewsLoader(MainActivity.this, uri.toString());
     }
 
     @Override
@@ -97,5 +106,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             return false;
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
